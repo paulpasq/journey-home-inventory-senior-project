@@ -1,0 +1,7 @@
+th.example-center, td.example-center { text-align: center; }
+
+form #center {
+    display: flex;
+    justify-content: center;
+
+  }

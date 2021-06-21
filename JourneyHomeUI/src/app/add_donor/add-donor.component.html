@@ -1,0 +1,68 @@
+<ng-container>
+    <div class="modal-header">
+        <h4 class="modal-title">Add Donor</h4>
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+            <span aria-hidden="true">x</span>
+        </button>
+    </div>
+    <form [formGroup]="myForm" (ngSubmit)="submitForm()">
+        <div class="modal-body">
+            <div class="container">
+
+                <div class="input-group">
+                    <label for="name">Name:</label>
+                    <div id="name">
+                        <input formControlName="name" type="name" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && name.errors }" required>
+                        <div *ngIf="submitted && name.errors" class="invalid-feedback">
+                            <div *ngIf="name.errors.required">
+                                Name is required..
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="email">Email:</label>
+                    <div id="email">
+                        <input formControlName="email" type="email" class="form-control"
+                            pattern="(^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$|null)"
+                            [ngClass]="{ 'is-invalid': submitted && email.errors }">
+                        <div *ngIf="submitted && email.errors" class="invalid-feedback">
+                            <div *ngIf="name.errors">
+                                Please enter a valid email address
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="phone">Phone:</label>
+                    <div id="phone">
+                        <input formControlName="phone" type="phone" class="form-control"
+                            pattern="(^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$|null)"
+                            [ngClass]="{ 'is-invalid': submitted && phone.errors }">
+                        <div *ngIf="submitted && phone.errors" class="invalid-feedback">
+                            <div *ngIf="phone.errors">
+                                Please enter a valid phone number
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="town">Town:</label>
+                    <div id="town">
+                        <input formControlName="town" type="town" class="form-control">
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Close</button>
+            </div>
+        </div>
+    </form>
+</ng-container>

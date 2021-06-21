@@ -1,0 +1,54 @@
+<link href="//max/css/bootstrap.min.csscdn.bootstrapcdn.com/bootstrap/4.0.0" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<html>
+
+  <head type="text">
+    <style>
+      @media (min-width: 800px) {
+        body {
+          background: url('../../assets/login.jpeg');
+          background-size: 100% 100%;
+          background-repeat: no-repeat;
+        }
+      }
+
+      @media (max-width: 799px) {
+        body {
+          background: url('../../assets/phonebg.PNG.jpeg');
+          background-size: 100% 100%;
+          background-repeat: no-repeat;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <div class="header"></div>
+    </main>
+    <div class="wrapper fadeInDown">
+      <div id="formContent">
+
+      <br>
+
+      <img src="../../assets/main_header.png">
+      
+      <br>
+
+      <!-- Login Form -->
+      <div *ngIf="showErrorMessage" class='alert alert-danger'> Invalid Username or Password </div>
+      <form [formGroup]="loginForm" (ngSubmit)="submitForm()">
+        <input type="text" class="fadeIn second" formControlName="userName" placeholder="Username">
+        <input type="password" class="fadeIn third" formControlName="password" placeholder="Password" value="secret">
+        <button class="btn btn-primary">Login</button>
+      </form>
+
+      <br>
+
+      </div>
+    </div>
+  </body>
+
+</html>

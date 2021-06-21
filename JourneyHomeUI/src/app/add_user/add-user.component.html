@@ -1,0 +1,51 @@
+<ng-container>
+    <div class="modal-header">
+        <h4 class="modal-title">Add User</h4>
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+            <span aria-hidden="true">x</span>
+        </button>
+    </div>
+    <form [formGroup]="myForm" (ngSubmit)="submitForm()">
+        <div class="modal-body">
+            <div class="container">
+                <div class="input-group">
+                    <label for="email">Email:</label>
+                    <div id="email">
+                        <input formControlName="email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+                        type="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && email.errors }"
+                        required>
+                        <div *ngIf="submitted && email.errors" class="invalid-feedback">
+                            <div style="margin-bottom: 10px;">Please enter a valid email address.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password:</label>
+                    <div id="password">
+                        <input formControlName="password" type="password" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && password.errors }" required>
+                        <div *ngIf="submitted && password.errors" class="invalid-feedback">
+                            <div *ngIf="password.errors.required">Password is required.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <label for="admin"> Is Admin: </label>
+                    <div id="admin">
+                        <select formControlName="admin" type="dropdown" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && admin.errors }" required>
+                            <div *ngIf="submitted && admin.invalid" class="invalid-feedback">
+                            </div>
+                            <option value="true">True</option>
+                            <option value="false">False</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Close</button>
+            </div>
+        </div>
+    </form>
+</ng-container>

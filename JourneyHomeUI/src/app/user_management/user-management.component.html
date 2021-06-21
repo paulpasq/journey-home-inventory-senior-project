@@ -1,0 +1,51 @@
+<nav-bar></nav-bar>
+
+<form>
+
+
+  <div id="left" style="
+  text-align: left;
+  margin-top: 0pt;
+  padding-left: 5pt;
+  ">
+    <h4 style="margin-bottom: 5pt;"><b>User Management</b></h4>
+
+    <button class="btn btn-success" type="button" (click)="createUser()">Add User</button>
+  </div>
+
+  <style>
+    div.form-group {
+      float: right;
+    }
+  </style>
+
+  <style>
+    div.table {
+      margin-top: 10px;
+    }
+  </style>
+
+  <div class="table" style="text-align: center;">
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="cell-border">
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Is Admin</th>
+          <th>Edit/Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users; let i = index;">
+          <td>{{ user.Email }}</td>
+          <td>{{ user.IsAdmin }}</td>
+          <td>
+            <button class="table-row-action edit-action btn-primary" style="margin-right: 10px;" type="button"
+            (click)="editUser(user.UserID)">Edit</button>
+            <button class="table-row-action delete-action btn-danger" type="button"
+            (click)="deleteUser(i, user.UserID)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</form>

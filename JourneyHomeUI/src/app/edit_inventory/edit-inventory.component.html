@@ -1,0 +1,124 @@
+<ng-container>
+    <div class="modal-header">
+        <h4 *ngIf="itemData && myForm" class="modal-title">Edit Menu: {{itemData.PrimaryCategory}},
+            {{itemData.SecondaryCategory}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+            <span aria-hidden="true">x</span>
+        </button>
+    </div>
+
+    <form *ngIf="itemData && myForm" [formGroup]="myForm" (ngSubmit)="submitForm()">
+        <div class="modal-body">
+            <div class="container">
+
+                <div class="input-group">
+                    <label for="donorDropdown" id="donorDropdownLable">Item Donor:</label>
+                    <div id="donorDropdown">
+                        <p-autoComplete [forceSelection]="true" formControlName="donorDropdown"
+                            [(ngModel)]="donorSelected" [suggestions]="filteredDonators" field="Name" [dropdown]="true"
+                            (completeMethod)="search($event)">
+                        </p-autoComplete>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Item Name:</label>
+                    <div id="Name">
+                        <input type="text" formControlName="itemName" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && itemName.errors }" required>
+                        <div *ngIf="submitted && itemName.errors" class="invalid-feedback">
+                            <div *ngIf="itemName.errors.required">
+                                Item Name is required..
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="input-group">
+                    <label for="dateReceived">Date Received:</label>
+                    <div id="dateReceived">
+                        <input formControlName="dateReceived" type="text" ngbDatepicker #ds="ngbDatepicker"
+                            class="form-control" [ngClass]="{ 'is-invalid': submitted && dateReceived.errors }"
+                            required>
+                        <div *ngIf="submitted && dateReceived.errors" class="invalid-feedback">
+                            <div *ngIf="dateReceived.errors.required">
+                                Date Received is required..
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group-append">
+                        <button style="height: 46px;" class="btn btn-outline-secondary calendar" (click)="ds.toggle()"
+                            type="button"></button>
+                    </div>
+                </div>
+
+
+                <div *ngIf="itemData.DateDonated" class="input-group">
+                    <label for="dateDonated">Date Donated:</label>
+                    <div id="dateDonated">
+                        <input formControlName="dateDonated" type="text" ngbDatepicker #ds="ngbDatepicker"
+                            class="form-control" [ngClass]="{ 'is-invalid': submitted && dateDonated.errors }" required>
+                        <div *ngIf="submitted && dateDonated.errors" class="invalid-feedback">
+                            <div *ngIf="dateDonated.errors.required">
+                                Date Donated is required..
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group-append">
+                        <button style="height: 46px;" class="btn btn-outline-secondary calendar" (click)="ds.toggle()"
+                            type="button"></button>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="itemQuantity">Item Quantity:</label>
+                    <div id="itemQuantity">
+                        <input formControlName="itemQuantity" id="quantityID" type="number" min="1" max="100"
+                            class="form-control " [ngClass]="{ 'is-invalid': submitted && itemQuantity.errors }"
+                            onkeypress="return event.charCode >= 48" required>
+                        <div *ngIf="(submitted && itemQuantity.errors)" class="invalid-feedback">
+                            <div *ngIf="itemQuantity.errors">
+                                Quantity 1 - 100 is required.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="Condition">Item Condition:</label>
+                    <div id="Condition">
+                        <select formControlName="Condition" style="width: 175px;" class="form-control">
+                            <option value="Ready">Ready</option>
+                            <option value="In Need Of Repair">In Need Of Repair</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div *ngIf=!(itemData.Archived)>
+                    <div class="input-group">
+                        <label for="file">Item Photo: </label>
+                        <input class="file-input" enctype="multipart/form-data" type="file" id="Photo" accept="image/*"
+                            (change)="handleFileInput($event.target.files)">
+                    </div>
+                    <div *ngIf="itemData.Photo && !(itemPhoto) && !newPhoto">
+                        <img src="{{itemData.Photo}}" height="100pt" width="100pt" alt="Red dot" />
+                    </div>
+                    <div *ngIf="newPhoto">
+                        <img src="{{url}}" height="100pt" width="100pt" alt="Red dot" />
+                    </div>
+
+
+                    <button *ngIf="itemPhoto || itemData.Photo || newPhoto" type="button" class="btn btn-danger"
+                        (click)="removePhoto()" style="margin-top: 10pt;">Remove Photo</button>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Close</button>
+            </div>
+        </div>
+    </form>
+</ng-container>

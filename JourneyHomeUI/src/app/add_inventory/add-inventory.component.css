@@ -1,0 +1,47 @@
+#title {
+    width: 700px ;
+    height: 60px;
+    margin-left: 100px;
+    margin-top: 20px;
+  }
+  
+  .is-grouped{
+  margin-top: 30px;
+  margin-bottom: 0px;
+  }
+  
+  .dropdown{
+    width: 10%;
+  }
+  
+  label{
+  position: absolute;
+  margin-top: 20px;
+  font-size: 15px;
+  }
+  
+  input{
+  margin-top: 60px;
+  height: 40px;
+  margin-right: 5pt;
+  }
+  form{
+  margin-left: 15pt;
+  }
+  
+  form label{
+  font-weight: bold;
+  }
+  
+  .input-group-append{
+    height: 40px;
+    margin-top: 60px;
+    margin-right: 100px;
+  }
+  
+  #quantity{
+    width: 300px;
+  }
+  
+  
+  

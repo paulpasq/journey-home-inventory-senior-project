@@ -1,0 +1,73 @@
+#itemTag{
+    margin-left: 96px;
+    margin-bottom: 10px;
+}
+#donorName{
+    margin-left: 56px;
+    margin-bottom: 10px;
+}
+#donorEmail{
+    margin-left: 60px;
+    margin-bottom: 10px;
+}
+
+#donorPhone{
+    margin-left: 55px;
+    margin-bottom: 10px;
+}
+
+#dateReceived{
+    margin-left: 47px;
+    margin-bottom: 10px;
+}
+
+#dateDonated{
+    margin-left: 49px;
+    margin-bottom: 10px;
+}
+
+#itemCondition{
+    margin-left: 42px;
+    margin-bottom: 10px;
+}
+
+#itemCategory{
+    margin-left: 48px;
+    margin-bottom: 10px;
+}
+
+#itemQuantity{
+    margin-left: 52px;
+    margin-bottom: 10px;
+}
+
+.modal-content{
+    margin-left: 50px;
+}
+
+#header6{
+    margin-bottom: 15px;
+}
+
+.tp-section {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 60px;
+ }
+ .tp-margin {
+    margin: 0 10px;
+ }
+
+form{
+    margin-left: 40px;
+}
+
+label{
+    margin-top: 10px;
+}
+
+input{
+    height: 46px;
+    width: 400px;
+}

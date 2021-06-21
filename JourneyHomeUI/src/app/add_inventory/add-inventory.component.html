@@ -1,0 +1,290 @@
+<nav-bar></nav-bar>
+
+
+<div id="left" style="text-align: left; margin-top: 0pt; padding-left: 15pt;">
+  <h4><b>Add Inventory</b></h4>
+</div>
+
+<form [formGroup]="dynamicForm" (ngSubmit)="saveItem()" autocomplete="off">
+  <div *ngIf="showErrorMessage" class='alert alert-danger'> You must add items to the page! </div>
+  <div class="row">
+    <!--Row for "Donor Information" title-->
+    <div class="col-md-4" style="margin-bottom: 5pt;">
+      <!--Div for "Donor Information" title-->
+      <h4>Donor Information</h4>
+    </div>
+  </div>
+
+  <div class="row">
+    <!--Row for existing or new donor forms-->
+    <div class="col-md-2">
+      <!--Div for existing donor dropdown selector-->
+      <p-autoComplete [ngModelOptions]="{standalone: true}" [forceSelection]="true" [(ngModel)]="donorSelected"
+      [suggestions]="filteredDonators" field="Name" [dropdown]="true" (completeMethod)="search($event)">
+      </p-autoComplete>
+    </div>
+    <div class="col-sm-2">
+      <!--Div for new donor button-->
+      <button class="btn btn-success" type="button" (click)="createDonator()">AddDonor</button>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <!--Row for add item/remove item buttons-->
+    <div class="col-md-3">
+      <!--Div for add/remove item button-->
+      <div class='is-grouped'>
+        <button type="button" style="margin-right: 5pt;" class="btn btn-success" (click)="addItem()">Add Item</button>
+        <button type="button" class="btn btn-danger" (click)="removeItem()">Remove Item</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngFor="let item of itemArray.controls; let i = index" class="list-group list-group-flush">
+    <div class="list-group-item" style="margin-top: -0pt">
+      <hr>
+      <h5 class="title">Item {{i + 1}}</h5>
+      <div [formGroup]="item">
+        <div class="row">
+          <!--Row for new item information-->
+          <div class="justify-content-start col-lg-2 col-md-3 col-sm-4 col-xs-5" style="margin-top: 9pt;">
+            <!--Div for item name form-->
+            <label>Item Name</label>
+            <div class="justify-content-start " style="position: relative;">
+              <div class="justify-content-start">
+                <input type="text" placeholder="Name" matInput formControlName="Name"
+                class=" justify-content-start form-control"
+                [ngClass]="{ 'is-invalid': item.get('Name').errors && submitted }" required>
+                <div *ngIf="(item.get('Name').errors && submitted)" class="invalid-feedback">
+                  <div *ngIf="item.get('Name').errors.required">Name is required.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="justify-content-start col-lg-2 col-md-3 col-sm-4 col-xs-5">
+            <!--Div for primary category dropdown-->
+            <div class="drowdown" id="primaryDropDown" style="position: relative;">
+              <p style="font-weight: bold;">Primary Category</p>
+              <div id="PrimaryCategory">
+                <select id="primaryCatDrop" class="form-control" (change)="selectChangeHandler($event, i)"
+                formControlName="PrimaryCategory"
+                [ngClass]="{ 'is-invalid': item.get('PrimaryCategory').errors && submitted }" required>
+                  <option value="" disabled selected>Primary Category</option>
+                  <option value="Kitchen">Kitchen</option>
+                  <option value="Bedroom">Bedroom</option>
+                  <option value="Living Room">Living Room</option>
+                  <option value="Bathroom">Bathroom</option>
+                  <option value="Office">Office</option>
+                </select>
+                <div *ngIf="(item.get('PrimaryCategory').errors && submitted)" class="invalid-feedback">
+                  <div *ngIf="item.get('PrimaryCategory').errors.required">Primary Category is required.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="justify-content-start">
+            <!--Div for secondary category dropdown
+            
+              Note that the proper way to do these dropdowns is not by hard coding them. The proper way would be
+              to have them listed in an array in the .ts file and then have them populate the dropdown based on the primary category dropdown.
+              Angular was not doing this properly when the secondary categories were in an array in the TypeScript file so hard coding
+              was the only way to go.
+            -->
+
+            <div class="drowdown" id="secondaryDropDown" style="position: relative;">
+              <p style="font-weight: bold;">Secondary Category</p>
+              <div id="SecondaryCategory">
+
+                <div *ngIf="this.itemArray.at(i).get('PrimaryCategory').value == ''">
+                  <select style="width: 200px;" class="form-control" formControlName="SecondaryCategory"
+                  [ngClass]="{ 'is-invalid': item.get('SecondaryCategory').errors && submitted }" required>
+                    <option value="" disabled selected>Secondary Category</option>
+                  </select>
+                  <div *ngIf="(item.get('SecondaryCategory').errors && submitted)" class="invalid-feedback">
+                    <div *ngIf="item.get('SecondaryCategory').errors.required">Secondary Category is required.</div>
+                  </div>
+                </div>
+
+
+                <div *ngIf="this.itemArray.at(i).get('PrimaryCategory').value == 'Kitchen'">
+                  <select style="width: 200px;" class="form-control" formControlName="SecondaryCategory">
+                    <option value="None" disabled selected>Secondary Category</option>
+                    <option value="Table">Table</option>
+                    <option value="Chairs">Chairs</option>
+                    <option value="Island">Island</option>
+                    <option value="Cabinet">Cabinet</option>
+                    <option value="Microwave">Microwave</option>
+                    <option value="Toaster">Toaster</option>
+                    <option value="Coffee Maker">Coffee Maker</option>
+                    <option value="Blender">Blender</option>
+                    <option value="Dishes">Dishes</option>
+                    <option value="Pots/Pans">Pots/Pans</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+
+                <div *ngIf="this.itemArray.at(i).get('PrimaryCategory').value == 'Bedroom'">
+                  <select style="width: 200px;" class="form-control" formControlName="SecondaryCategory">
+                    <option value="None" selected>Secondary Category</option>
+                    <option value="Twin Mattress">Twin Mattress</option>
+                    <option value="Twin Box Spring">Twin Box Spring</option>
+                    <option value="Twin Frame">Twin Frame</option>
+                    <option value="Twin Sheet Set">Twin Sheet Set</option>
+                    <option value="Twin Blanket/Comforter">Twin Blanket/Comforter</option>
+                    <option value="Full Mattress">Full Mattress</option>
+                    <option value="Full Box Spring">Full Box Spring</option>
+                    <option value="Full Frame">Full Frame</option>
+                    <option value="Full Sheet Set">Full Sheet Set</option>
+                    <option value="Full Blanket/Comforter">Full Blanket/Comforter</option>
+                    <option value="Queen Mattress">Queen Mattress</option>
+                    <option value="Queen Box Spring">Queen Box Spring</option>
+                    <option value="Queen Frame">Queen Frame</option>
+                    <option value="Queen Sheet Set">Queen Sheet Set</option>
+                    <option value="Queen Blanket/Comforter">Queen Blanket/Comforter</option>
+                    <option value="Adjustable Metal Frame">Adjustable Metal Frame</option>
+                    <option value="Dresser">Dresser</option>
+                    <option value="Dresser with Mirror">Dresser with Mirror</option>
+                    <option value="Night Stand">Night Stand</option>
+                    <option value="Throw Blanket">Throw Blanket</option>
+                    <option value="Pillow">Pillow</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+
+                <div *ngIf="this.itemArray.at(i).get('PrimaryCategory').value == 'Living Room'">
+                  <select style="width: 200px;" class="form-control" formControlName="SecondaryCategory">
+                    <option value="None" selected>Secondary Category</option>
+                    <option value="Loveseat">Loveseat</option>
+                    <option value="Sofa">Sofa</option>
+                    <option value="Sectional">Sectional</option>
+                    <option value="Futon">Futon</option>
+                    <option value="Coffee Table">Coffee Table</option>
+                    <option value="End Table">End Table</option>
+                    <option value="TV Stand">TV Stand</option>
+                    <option value="TV">TV</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+
+                <div *ngIf="this.itemArray.at(i).get('PrimaryCategory').value == 'Bathroom'">
+                  <select style="width: 200px;" class="form-control" formControlName="SecondaryCategory">
+                    <option value="None" selected>Secondary Category</option>
+                    <option value="Towel Set">Towel Set</option>
+                    <option value="Bath Mat">Bath Mat</option>
+                    <option value="Shower Curtain">Shower Curtain</option>
+                    <option value="Shower Curtain Rings">Shower Curtain Rings</option>
+                    <option value="Trash Can">Trash Can</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+
+                <div *ngIf="this.itemArray.at(i).get('PrimaryCategory').value == 'Office'">
+                  <select style="width: 200px;" class="form-control" formControlName="SecondaryCategory">
+                    <option value="None" selected>Secondary Category</option>
+                    <option value="Desk">Desk</option>
+                    <option value="Desk Chair">Desk Chair</option>
+                    <option value="File Cabinet">File Cabinet</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+          <div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </div>
+          <div class="justify-content-start">
+            <!--Div for condition dropdown-->
+            <div class="drowdown" id="stateDropDown" style="position: relative;">
+              <p style="font-weight: bold;">Condition</p>
+              <div id="Condition">
+                <select formControlName="Condition" style="width: 175px;" class="form-control"
+                [ngClass]="{ 'is-invalid': item.get('Condition').errors && submitted }" required>
+                  <option value="" disabled selected>Condition</option>
+                  <option value="Ready">Ready</option>
+                  <option value="In Need Of Repair">In Need Of Repair</option>
+                </select>
+                  <div *ngIf="(item.get('Condition').errors && submitted)" class="invalid-feedback">
+                  <div *ngIf="item.get('Condition').errors.required">Condition is required.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            &nbsp;
+          </div>
+          <div class="justify-content-start">
+            <!--Div for quantity dropdown-->
+            <div class="input-group" style="position: relative;">
+              <p class="col-sm-2" style="font-weight: bold;">Quantity</p>
+              <div id="Quantity" style="margin: 10%; position: absolute;">
+                <input formControlName="Quantity" class="form-control" type="number"
+                onkeypress="return event.charCode >= 48" min="1" max="100" style="width: 120px;"
+                [ngClass]="{ 'is-invalid': item.get('Quantity').errors && submitted }" required>
+                <div *ngIf="(item.get('Quantity').errors && submitted)" class="invalid-feedback">
+                  <div *ngIf="item.get('Quantity').errors">Quantity 1 - 100 is required.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </div>
+          <div>
+            <!--Div for file uploads-->
+            <div style="margin-top: 9pt;" class="justify-content-start col-lg-1 col-md-1 col-sm-4 col-xs-5">
+              <label>Photo</label>
+              <input class="file-input" enctype="multipart/form-data" type="file" formControlName="Photo" accept="image/*"
+              (change)="handleFileInput($event.target.files, i)">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <!--Row for date recieved form-->
+    <div class="col-md-6">
+      <!--Div for date recieved form-->
+      <div class="input-group">
+        <label for="date_received">Date Received:</label>
+        <div id="dateReceived">
+          <input formControlName="date_received" ngbDatepicker #dp="ngbDatepicker" type="text" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && date_received.errors }" required>
+          <div *ngIf="submitted && date_received.errors" class="invalid-feedback">
+            <div *ngIf="date_received.errors.required">
+            Date is required, mm/dd/yyyy.
+            </div>
+          </div>
+        </div>
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <!--Row for submit/cancel buttons-->
+    <div class="col-sm-2">
+      <!--Div for submit/cancel button-->
+      <div class='is-grouped'>
+        <button class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-default" (click)="cancel()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,18 @@
+<div style="display: block;">
+  <canvas baseChart width="400" height="300"
+  [data]="doughnutChartData"
+  [labels]="doughnutChartLabels"
+  [chartType]="doughnutChartType"
+  [colors]="doughnutChartColors"
+  [plugins]="doughnutChartPlugins"
+  [options]="doughnutChartOptions">
+  </canvas>
+</div>
+<div style="margin-top: 2%;"> 
+  <input checked style = "margin-left: 66%;" type="checkbox" id="percentCheckbox" name="percentCheckbox" value="Bike" (change)="percentageToggle($event)">
+  <label for="percentCheckbox">&nbsp;Percentages</label><br>
+</div>
+
+
+
+

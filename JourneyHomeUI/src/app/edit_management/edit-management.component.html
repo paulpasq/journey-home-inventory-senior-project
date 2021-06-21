@@ -1,0 +1,39 @@
+<ng-container>
+    <div class="modal-header">
+        <h4 class="modal-title">Edit User</h4>
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+            <span aria-hidden="true">x</span>
+        </button>
+    </div>
+    <form *ngIf="userData" [formGroup]="myForm" (ngSubmit)="submitForm()">
+        <div class="modal-body">
+            <div class="container">
+                <div class="input-group">
+                    <label for="useremail">Email:</label>
+                    <div id="useremail">
+                        <input style="margin-left: 54px;" formControlName="useremail" type="email" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && useremail.errors }"
+                            pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" required>
+                        <div *ngIf="submitted && useremail.errors" class="invalid-feedback">
+                            <div style="margin-bottom: 20px;margin-left: 54px;">
+                                Please enter a valid email address.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="drowdown" id="stateDropDown">
+                    <label> is Admin: </label>
+                    <select formControlName="is_Admin" style="margin-left: 33px; margin-bottom: 10px;" required>
+                        <option value="true">True</option>
+                        <option value="false">False</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" type="button" (click)="passreset(user_id)">Reset Password</button>
+                <button class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Close</button>
+            </div>
+        </div>
+    </form>
+</ng-container>

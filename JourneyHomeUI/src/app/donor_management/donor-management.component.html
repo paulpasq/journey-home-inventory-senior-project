@@ -1,0 +1,55 @@
+<nav-bar></nav-bar>
+
+<form>
+
+
+  <style>
+    div.form-group {
+      float: right;
+    }
+  </style>
+
+  <style>
+    div.table {
+      margin-top: 10px;
+    }
+  </style>
+
+  <div id="left" style="
+  text-align: left;
+  margin-top: 0pt;
+  padding-left: 5pt;">
+    <h4 style="margin-bottom: 5pt;"><b>Donor Management</b></h4>
+    <button class="btn btn-success" type="button" (click)="createDonator()">Add Donor</button>
+  </div>
+
+
+  <div class="table" style="text-align: center;">
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="cell-border">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Town</th>
+          <th>Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let donator of donators; let i = index;">
+          <td>{{ donator.Name }}</td>
+          <td>{{ donator.Email }}</td>
+          <td>{{ donator.Phone }}</td>
+          <td>{{ donator.Town }}</td>
+          <td>
+            <!-- disable the option buttons for donator ID 0 = "*No Donor*" */-->
+            <button *ngIf="!(donator.DonatorID == 0)" class="table-row-action edit-action btn-primary"
+              style="margin-right: 10px;" type="button" (click)="editDonator(donator.DonatorID)">Edit</button>
+            <button *ngIf="!(donator.DonatorID == 0)" class="table-row-action delete-action btn-danger" type="button"
+              (click)="deleteDonator(i, donator.DonatorID)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</form>

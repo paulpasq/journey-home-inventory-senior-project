@@ -1,0 +1,84 @@
+<ng-container>
+    <div class="modal-header">
+        <h4 class="modal-title">CSV Export Options</h4>
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+            <span aria-hidden="true">x</span>
+        </button>
+    </div>
+
+    <form *ngIf="myForm" [formGroup]="myForm" (ngSubmit)="submitForm()">
+        <div class="modal-body">
+            <div class="container">
+
+                <h6 id="header6">Export Archives and/or Current inventory?</h6>
+                <div class="input-group">
+                    <div id="Archived">
+                        <mat-checkbox class="tp-margin" formControlName="Archived" [(ngModel)]="ArchivedChecked">Archived</mat-checkbox>
+                    </div>
+                    <div id="Current">
+                        <mat-checkbox class="tp-margin" formControlName="Current" [(ngModel)]="CurrentChecked">Current</mat-checkbox>
+                    </div>
+                </div>
+
+                <hr>
+
+                <h6 id="header6">What data would you like to export?</h6>
+                <div class="input-group">
+                    <div id="DonationID">
+                        <mat-checkbox class="tp-margin" formControlName="DonationID" [(ngModel)]="DonationIDChecked">Donation ID</mat-checkbox>
+                    </div>
+                    <div id="Name">
+                        <mat-checkbox class="tp-margin" formControlName="Name" [(ngModel)]="NameChecked">Donation Name</mat-checkbox>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <div id="PrimaryCategory">
+                        <mat-checkbox class="tp-margin" formControlName="PrimaryCategory"[(ngModel)]="PrimaryCategoryChecked">Primary Category</mat-checkbox>
+                    </div>
+                    <div id="SecondaryCategory">
+                        <mat-checkbox class="tp-margin" formControlName="SecondaryCategory" [(ngModel)]="SecondaryCategoryChecked">Secondary Category</mat-checkbox>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <div id="DonatorID">
+                        <mat-checkbox class="tp-margin" formControlName="DonatorID" [(ngModel)]="DonatorIDChecked">Donator ID</mat-checkbox>
+                    </div>
+                    <div id="Quantity">
+                        <mat-checkbox class="tp-margin" formControlName="Quantity" [(ngModel)]="QuantityChecked">Quantity</mat-checkbox>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <div id="Tag">
+                        <mat-checkbox class="tp-margin" formControlName="Tag" [(ngModel)]="TagChecked">Tag</mat-checkbox>
+                    </div>
+                    <div id="Condition">
+                        <mat-checkbox class="tp-margin" formControlName="Condition" [(ngModel)]="ConditionChecked">Condition</mat-checkbox>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <div id="DateRecieved">
+                        <mat-checkbox class="tp-margin" formControlName="DateRecieved" [(ngModel)]="DateRecievedChecked">Date Recieved</mat-checkbox>
+                    </div>
+                    <div id="DateDonated">
+                        <mat-checkbox class="tp-margin" formControlName="DateDonated" [(ngModel)]="DateDonatedChecked">Date Donated</mat-checkbox>
+                    </div>
+                </div>
+
+                <br>
+
+                <div id="SelectAll">
+                    <mat-checkbox (change)="selectAll()" class="tp-margin" formControlName="SelectAll" [(ngModel)]="SelectAllChecked">Select All</mat-checkbox>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-primary">Export</button>
+                <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Close</button>
+            </div>
+        </div>
+    </form>
+</ng-container>

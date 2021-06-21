@@ -1,0 +1,87 @@
+<ng-container>
+    <div class="modal-header">
+        <h4 *ngIf="itemData && myForm" class="modal-title">Donation Menu: {{itemData.PrimaryCategory}},
+            {{itemData.SecondaryCategory}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+            <span aria-hidden="true">x</span>
+        </button>
+    </div>
+    <form *ngIf="itemData && myForm" [formGroup]="myForm" (ngSubmit)="submitForm()">
+        <div class="modal-body">
+            <div class="container">
+
+                <div class="input-group">
+                    <label for="donorName">Donor Name:</label>
+                    <div id="donorName">
+                        <input style="background-color: #d3d3d3;" formControlName="donorName" type="text"
+                            [readonly]="true" value={{itemData.Donator.Name}}>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="donorEmail">Donor Email:</label>
+                    <div id="donorEmail">
+                        <input style="background-color: #d3d3d3;" formControlName="donorEmail" type="text"
+                            value={{itemData.Donator.Email}} [readonly]=true>
+                    </div>
+                    <button type="button" style="margin-right: 30px;" class="btn btn-link" (click)="sendEmail()">Send Email</button>
+                </div>
+
+                <div class="input-group">
+                    <label for="donorPhone">Donor Phone:</label>
+                    <div id="donorPhone">
+                        <input style="background-color: #d3d3d3;" formControlName="donorPhone" type="text"
+                            value={{itemData.Donator.Phone}} [readonly]=true>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="dateDonated">Date Donated:</label>
+                    <div id="dateDonated">
+                        <input formControlName="dateDonated" type="text" ngbDatepicker #ds="ngbDatepicker"
+                            [ngClass]="{ 'is-invalid': submitted && dateDonated.errors }" class="form-control" required>
+
+                        <div *ngIf="submitted && dateDonated.errors" class="invalid-feedback">
+                            <div *ngIf="dateDonated.errors.required">
+                                Date donated is required..
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group-append">
+                        <button style="height: 46px;" class="btn btn-outline-secondary calendar" (click)="ds.toggle()"
+                            type="button"></button>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="itemQuantity">Item Quantity:</label>
+                    <div id="itemQuantity">
+                        <input formControlName="itemQuantity" id="quantityID" type="number"
+                            onkeypress="return event.charCode >= 48" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && itemQuantity.errors }" required>
+                        <div *ngIf="submitted && itemQuantity.errors" class="invalid-feedback">
+                            <div *ngIf="itemQuantity.errors.required">
+                                Item Quantity is required.
+                            </div>
+                        </div>
+
+                        <button type="button" style="margin-right: 3px;" class="btn btn-danger"
+                            (click)="removeItem()">-</button>
+                        <button type="button" style="margin-right: 3px;" class="btn btn-success"
+                            (click)="addItem()">+</button>
+
+
+                    </div>
+                </div>
+
+                <div id="description">
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Close</button>
+            </div>
+        </div>
+    </form>
+</ng-container>

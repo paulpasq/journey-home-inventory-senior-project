@@ -1,0 +1,28 @@
+
+#EmailHeader{
+    margin-left: 38px;
+    margin-bottom: 30px;
+}
+
+#EmailBody{
+    margin-left: 52px;
+    margin-bottom: 10px;
+}
+
+.modal-content{
+    margin-left: 50px;
+}
+
+
+form{
+    margin-left: 40px;
+}
+
+label{
+    margin-top: 10px;
+}
+
+input{
+    height: 46px;
+    width: 400px;
+}

@@ -1,0 +1,58 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+
+<div style="margin-top: 10px; margin-bottom: 10px; text-align: center;">
+  <a [routerLink]="['/inventory','main']"><img src="../../assets/main_header.png" alt="Journey Home" id="logo"
+  data-height-percentage="90" data-actual-width="280" data-actual-height="63"></a>
+</div>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
+  <a class="navbar-brand">
+    <a [routerLink]="['/inventory','main']"><img src="../../assets/circle_key_logo_.png" alt="Logo"
+    style="width:40px;"></a>
+  </a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+        Inventory
+        </a>
+        <div class="dropdown-menu">
+          <a [routerLink]="['/inventory', 'main']" class="dropdown-item" href="#">Current Inventory</a>
+          <a [routerLink]="['/inventory', 'counts']" class="dropdown-item" href="#">Inventory Counts</a>
+          <a [routerLink]="['/inventory', 'photos']" class="dropdown-item" href="#">Inventory Photos</a>
+          <a [routerLink]="['/inventory', 'archive']" class="dropdown-item" href="#">Donation History</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a [routerLink]="['/addInventory']" class="nav-link" href="#">Add Inventory</a>
+      </li>
+      <li class="nav-item">
+        <a [routerLink]="['/charts']" class="nav-link" href="#">Charts</a>
+      </li>
+      <li class="nav-item">
+        <a [routerLink]="['/donorManagement']" class="nav-link" href="#">Donor Management</a>
+      </li>
+      <li *ngIf="isAdmin" class="nav-item">
+        <a [routerLink]="['/userManagement']" class="nav-link" href="#">User Management</a>
+      </li>
+      <li  class="nav-item dropdown" style="cursor:pointer">
+        <a class="nav-link dropdown-toggle" id="navbardrop" data-toggle="dropdown">Options</a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" (click)="csvExport()">Export Data</a>
+          <a class="dropdown-item" *ngIf="isAdmin" (click)="changeEmailSettings()">Edit Email Template</a>
+          <a class="dropdown-item" (click)="logOut()" role="tab" data-toggle="tab">Logout</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>

@@ -1,0 +1,1 @@
+export * from '../user_management/user-management.component'

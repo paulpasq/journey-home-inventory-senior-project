@@ -1,0 +1,28 @@
+
+<div style="display: block;">
+    <canvas baseChart width="400" height="300"
+      [datasets]="lineChartData"
+      [labels]="lineChartLabels"
+      [options]="lineChartOptions"
+      [colors]="lineChartColors"
+      [legend]="lineChartLegend"
+      [chartType]="lineChartType"
+      [plugins]="lineChartPlugins">
+    </canvas>
+</div>
+
+<div style = "text-align: center; margin-top: 2%;">
+    <select id = "startMonthDropdown" (change)="onChangeStartMonth($event)" [(value)]="selectedStartMonth" [(ngModel)]="selectedStartMonth">
+        <option *ngFor = "let startMonth of startMonths" [value]="startMonth">{{monthNames[startMonth]}}</option>
+    </select><b> / </b>
+    <select id = "startYearDropdown" (change)="onChangeStartYear($event)" [(value)]="selectedStartYear" [(ngModel)]="selectedStartYear">
+        <option *ngFor = "let startYear of startYears" [value]="startYear">{{startYear}}</option>
+    </select>
+    <b> - </b>
+    <select id = "endMonthDropdown" (change)="onChangeEndMonth($event)" [(value)]="selectedEndMonth" [(ngModel)]="selectedEndMonth">
+        <option *ngFor = "let endMonth of endMonths" [value]="endMonth">{{monthNames[endMonth]}}</option>
+    </select><b> / </b>
+    <select id = "endYearDropdown" (change)="onChangeEndYear($event)" [(value)]="selectedEndYear" [(ngModel)]="selectedEndYear">
+        <option *ngFor = "let endYear of endYears" [value]="endYear">{{endYear}}</option>
+    </select>
+</div>

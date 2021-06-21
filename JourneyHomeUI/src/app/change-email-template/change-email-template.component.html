@@ -1,0 +1,68 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+
+<ng-container style="overflow: auto">
+    <div class="modal-header">
+        <h4 *ngIf="myForm" class="modal-title">Email Settings Menu</h4>
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+            <span aria-hidden="true">x</span>
+        </button>
+    </div>
+    <form *ngIf="myForm" [formGroup]="myForm" (ngSubmit)="submitForm()">
+        <div class="modal-body">
+            <div class="container">
+
+                <div class="input-group">
+                    <label for="EmailHeader">Email Header:</label>
+                    <div id="EmailHeader">
+                        <input formControlName="EmailHeader" type="EmailHeader" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && EmailHeader.errors }" required>
+                        <div *ngIf="submitted && EmailHeader.errors" class="invalid-feedback">
+                            <div *ngIf="EmailHeader.errors.required">
+                                Header is required.
+                            </div>
+                            <div *ngIf="EmailHeader.errors.maxlength">
+                                Header length must be less than 60 characters!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group mb-3 input-group-lg">
+                    <label for="EmailBody">Email Body:</label>
+                    <div id="EmailBody">
+                        <textarea formControlName="EmailBody" cols="49" rows="10" type="EmailBody" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && EmailBody.errors }" required></textarea>
+                        <div *ngIf="submitted && EmailBody.errors" class="invalid-feedback">
+                            <div *ngIf="EmailBody.errors.required">
+                                Body is required.
+                            </div>
+                            <div *ngIf="EmailBody.errors.maxlength">
+                                Body length must be less than 2,000 characters!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p>In order to represent variables, please use the following:</p>
+                <ul>
+                    <li>• <b>#DN</b>: Donor's Name</li>
+                    <li>• <b>#IN</b>: Item's Name</li>
+                    <li>• <b>#PC</b>: Item's Primary Category</li>
+                    <li>• <b>#SC</b>: Item's Secondary Category</li>
+                    <li>• <b>#DR</b>: Date item was recieved</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Close</button>
+            </div>
+        </div>
+    </form>
+</ng-container>

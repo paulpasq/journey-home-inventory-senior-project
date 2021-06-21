@@ -1,0 +1,167 @@
+<HTML>
+
+<head>
+
+  <title>
+    Inventory
+  </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+
+  <nav-bar></nav-bar>
+
+  <form>
+
+
+    <style>
+      div.form-group {
+        float: right;
+      }
+
+      img.loading {
+        background: transparent url("../../assets/loading.gif") no-repeat scroll center center;
+      }
+    </style>
+
+
+
+    <style>
+      div.table {
+        margin-top: 10px;
+      }
+    </style>
+
+
+
+    <div id="left" style="
+    text-align: left;
+    margin-top: -10pt;
+    padding-left: 5pt;
+    ">
+      <h4 *ngIf="currentInventoryState == 'main'"><b>Current Inventory</b></h4>
+      <h4 *ngIf="currentInventoryState == 'photos'"><b>Inventory Photos</b></h4>
+      <h4 *ngIf="currentInventoryState == 'archive'"><b>Donation History</b></h4>
+      <h4 *ngIf="currentInventoryState == 'counts'"><b>Inventory Counts</b></h4>
+    </div>
+
+    <div *ngIf="currentInventoryState == 'main'" class="table" style="text-align: center;">
+      <table *ngIf="loadOneComplete" datatable [dtOptions]="dtOptions[0]" [dtTrigger]="dtTrigger[0]" class="cell-border">
+        <thead>
+          <tr>
+            <th>Item Name</th>
+            <th>Primary Category</th>
+            <th>Secondary Category</th>
+            <th>Condition</th>
+            <th>Quantity</th>
+            <th>Donor Name</th>
+            <th>Photo</th>
+            <th>Date Received</th>
+            <th>Options</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of inventory; let i = index;" style="text-align: center;">
+            <td>{{ item.Name }}</td>
+            <td>{{ item.PrimaryCategory }}</td>
+            <td>{{ item.SecondaryCategory }}</td>
+            <td>{{ item.Condition }}</td>
+            <td>{{ item.Quantity }}</td>
+            <td>{{ item.Donator.Name }}</td>
+            <td><img class="itemPhoto loading" *ngIf="item.Photo" src="{{item.Photo}}" onerror="this.src='../../assets/loading.gif'" height="100pt" width="100pt"/></td>
+            <td>{{ item.DateRecieved | date:'MM-dd-yyyy' }}</td>
+            <td>
+              <button class="table-row-action donate-action btn-success" style="margin-right: 10px;" type="button"
+              (click)="donateItem(item.DonationID)">Donate</button>
+              <button class="table-row-action edit-action btn-primary" style="margin-right: 10px;" type="button"
+              (click)="editItem(item.DonationID)">Edit</button>
+              <button class="table-row-action delete-action btn-danger" type="button"
+              (click)="deleteRow(i, item.DonationID)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div *ngIf="currentInventoryState == 'counts'" class="table" style="text-align: center;">
+      <table *ngIf="loadTwoComplete" datatable [dtOptions]="dtOptions[1]" class="cell-border">
+        <thead>
+          <tr>
+            <th>Secondary Category</th>
+            <th>Total Count</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let section of inventoryCounts" style="text-align: center;">
+            <td>{{ section.SecondaryCategory }}</td>
+            <td>{{ section.Quantity }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div *ngIf="currentInventoryState == 'photos'" class="table" style="text-align: center;">
+      <table *ngIf="loadOneComplete" datatable [dtOptions]="dtOptions[0]" [dtTrigger]="dtTrigger[0]" class="cell-border">
+        <thead>
+          <tr>
+            <th>Item Name</th>
+            <th>Category</th>
+            <th>Condition</th>
+            <th>Quantity</th>
+            <th>Photo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of inventory; let i = index;" style="text-align: center;">
+            <td>{{ item.Name }}</td>
+            <td>{{ item.SecondaryCategory }}</td>
+            <td>{{ item.Condition }}</td>
+            <td>{{ item.Quantity }}</td>
+            <td><img class="itemPhoto loading" *ngIf="item.Photo" src="{{item.Photo}}" onerror="this.src='../../assets/loading.gif'" style="max-height: 200pt;" alt="No Image" /></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <div *ngIf="currentInventoryState == 'archive'" class="table" style="text-align: center;">
+      <table *ngIf="loadOneComplete" datatable [dtOptions]="dtOptions[0]" [dtTrigger]="dtTrigger[0]" class="cell-border">
+        <thead>
+          <tr>
+            <th>Item Name</th>
+            <th>Primary Category</th>
+            <th>Secondary Category</th>
+            <th>Condition</th>
+            <th>Quantity</th>
+            <th>Donor Name</th>
+            <th>Date Received</th>
+            <th>Date Donated</th>
+            <th>Edit/Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of archive; let i = index;" style="text-align: center;">
+            <td>{{ item.Name }}</td>
+            <td>{{ item.PrimaryCategory }}</td>
+            <td>{{ item.SecondaryCategory }}</td>
+            <td>{{ item.Condition }}</td>
+            <td>{{ item.Quantity }}</td>
+            <td>{{ item.Donator.Name }}</td>
+            <td>{{ item.DateRecieved | date:'MM-dd-yyyy' }}</td>
+            <td>{{ item.DateDonated | date:'MM-dd-yyyy' }}</td>
+            <td>
+              <button class="table-row-action edit-action btn-primary" style="margin-right: 10px;" type="button"
+              (click)="editItem(item.DonationID)">Edit</button>
+              <button class="table-row-action delete-action btn-danger" type="button"
+              (click)="deleteRow(i, item.DonationID)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </form>
+</body>
+
+</HTML>

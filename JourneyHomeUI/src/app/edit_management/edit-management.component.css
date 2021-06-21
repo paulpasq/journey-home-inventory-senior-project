@@ -1,0 +1,15 @@
+
+input{
+    margin-bottom: 20px;
+    height: 46px;
+    width: 300px;
+}
+
+label{
+    margin-top: 10px;
+}
+
+select{
+    height: 46px;
+    width: 100;
+}
